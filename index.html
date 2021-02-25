@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-do list</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
+        integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+
+
+    <!-- <link rel="stylesheet" href="style.css"> -->
+
+    <style>
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+div.wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 800px;
+    width: 700px;
+    background-color: #c7b89a;
+    border-radius: 30px;
+    box-shadow: 10px 10px 10px darkgrey;
+    /* margin: 0 auto; */
+
+}
+
+h1 {
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.searcher {
+    display: block;
+    height: 70px;
+    background-color: #c7b89a;
+
+}
+
+.searcher input {
+    margin: 20px 50px;
+    height: 40px;
+    width: 300px;
+    font-size: 30px;
+    border: black 2px solid;
+}
+
+
+ul.list {
+    background-color: c7b89a;
+    flex-grow: 1;
+}
+
+.list li.list_element {
+    list-style: none;
+    font-size: 30px;
+    margin-left: 30px;
+}
+
+ul.list input {
+    width: 20px;
+    height: 20px;
+}
+
+
+div.menu {
+    height: 130px;
+    position: relative;
+}
+
+.select_all_wrapper {
+    width: 50%;
+    margin-left: 30px;
+    font-size: 20px;
+
+}
+
+/* menu */
+
+div.menu_wrapper {
+    position: absolute;
+    width: 150px;
+    top: 0px;
+    left: 60%;
+    font-size: 20px;
+    user-select: none;
+    overflow: hidden;
+
+
+}
+
+.menu_wrapper div.option {
+    width: 80%;
+    height: 35px;
+    float: left;
+    border: 2px black solid;
+    border-right: 0px;
+    line-height: 35px;
+    padding-left: 3px;
+    background-color: aliceblue;
+
+}
+
+.fa-sort-down {
+    width: 20%;
+    height: 35px;
+    border: 2px black solid;
+    text-align: center;
+    cursor: pointer;
+    background-color: aliceblue;
+
+}
+
+.fa-sort-down.active {
+    transform: rotate(180deg)
+}
+
+.menu_wrapper .options_wrapper {
+    position: relative;
+    top: -150px;
+    /* display: none; */
+    transition: .3s linear;
+    /* width: 150px; */
+}
+
+.menu_wrapper .options_wrapper.active {
+    display: block;
+    top: 0;
+}
+
+
+.menu_wrapper .options_wrapper .opt {
+    height: 35px;
+    line-height: 35px;
+    padding-left: 3px;
+    border: 2px black solid;
+    border-top: 0px;
+    background-color: aliceblue;
+    cursor: pointer;
+
+}
+
+.menu_wrapper .options_wrapper.active .opt:hover {
+    background-color: cornsilk;
+}
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <h1> TO-DO LIST </h1>
+        <form action="" class="searcher">
+            <input placeholder="Wyszukaj">
+        </form>
+        <ul class="list">
+            <li class="list_element"> <input type="checkbox"> Zrobić pranie </li>
+            <li class="list_element"> <input type="checkbox"> Zjeść obiad </li>
+            <li class="list_element"> <input type="checkbox"> Wyprowadzić psa na spacer </li>
+            
+
+        </ul>
+
+        <div class="menu">
+
+            <div class="select_all_wrapper">
+                <input type="checkbox" id="select_all">
+                <label for="select_all">Zaznacz wszystko</label>
+            </div>
+
+            <div class="menu_wrapper">
+                <div class="option">Opcje</div>
+                <i class="fas fa-sort-down"></i>
+
+                <div class="options_wrapper">
+                    <div class="opt add">Dodaj </div>
+                    <div class="opt remove">Usuń</div>
+                    <div class="opt select">Zaznacz</div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- <script src="script.js"></script> -->
+    <script>
+        class Menu {
+    constructor(icon, menu_options, cl, add_btn, remove_btn, select_btn) {
+        this.icon = icon
+        this.menu_options = menu_options
+        this.cl = cl
+        this.add_btn = add_btn
+        this.remove_btn = remove_btn
+        this.select_btn = select_btn
+        this.icon.addEventListener("click", this.expand.bind(this))
+
+    }
+    expand() {
+        this.menu_options.classList.toggle(this.cl)
+    }
+
+    add(ul) {
+        const text = prompt("podaj coś")
+        if (!text) return this.add(ul)
+        const li = document.createElement("li")
+        li.classList.add("list_element")
+        li.innerHTML = `<input type="checkbox"> ${text}`
+        ul.appendChild(li)
+    }
+
+    remove(arr, elem) {
+        arr.forEach(item => {
+            item.parentNode.remove()
+        })
+    }
+
+    select(arr) {
+        arr.forEach(item => {
+            if (item.parentNode.style.color === "red") {
+                item.parentNode.style.color = "black"
+            } else item.parentNode.style.color = "red"
+        })
+    }
+}
+
+class Search {
+    static searcher(arr_elements, str) {
+        arr_elements = arr_elements.filter(item => item.textContent.toLowerCase().includes(str.toLowerCase()))
+        return arr_elements
+    }
+}
+
+class Select {
+    constructor(elements) {
+        this.elements = elements
+
+    }
+    check(elementy) {
+        const arr = []
+        elementy.forEach(item => {
+            if (item.checked) {
+                arr.push(item)
+            }
+        })
+        return arr
+    }
+}
+
+
+class List {
+    constructor() {
+
+        // *********** chceckboxy
+        this.checkboxes = [...document.querySelectorAll(".list_element input")]
+        this.boxes = new Select(this.checkboxes)
+        this.checkboxes.forEach(item => addEventListener("input", this.selection.bind(this)))
+        this.select_all_checkbox = document.getElementById("select_all")
+        this.select_all_checkbox.addEventListener("input", this.select_all.bind(this))
+
+        // ********************
+        // menu
+
+        this.add_btn = document.querySelector(".opt.add")
+        this.remove_btn = document.querySelector(".opt.remove")
+        this.select_btn = document.querySelector(".opt.select")
+        this.menu = new Menu(document.querySelector(".fa-sort-down"), document.querySelector(".menu_wrapper .options_wrapper"), "active", this.add_btn, this.remove_btn, this.select_btn)
+
+        this.menu.add_btn.addEventListener("click", this.add.bind(this))
+        this.menu.remove_btn.addEventListener("click", this.remove.bind(this))
+        this.menu.select_btn.addEventListener("click", this.select.bind(this))
+
+        // *************
+
+        this.input = document.querySelector(".searcher input")
+        this.elements_container = document.querySelector("ul.list")
+        this.elements = [...document.querySelectorAll(".list_element")]
+        this.input.addEventListener("input", this.search.bind(this))
+
+
+    }
+    // metody to-do listy
+    // wyszukiwarka
+
+    search(e) {
+        const elements_to_display = Search.searcher(this.elements, this.input.value.toLowerCase())
+        this.elements_container.textContent = ""
+        elements_to_display.forEach(item => {
+            this.elements_container.appendChild(item)
+        })
+    }
+    //// ******************* tablica z zaznoczonymi chceckboxami
+
+    selection() {
+        return this.boxes.check(this.checkboxes)
+    }
+
+    //*************************** */ metoda obslugujaca "zaznacz wszystko"
+    select_all(e) {
+        if (e.target.checked) {
+            this.checkboxes.forEach(item => {
+                item.checked = true
+            })
+
+        } else {
+            this.checkboxes.forEach(item => {
+                item.checked = false
+            })
+        }
+    }
+
+    // metody menu
+
+    add(e) {
+        this.menu.add(this.elements_container)
+        this.checkboxes = [...document.querySelectorAll(".list_element input")]
+        this.elements = [...document.querySelectorAll(".list_element")]
+
+    }
+
+    remove(e) {
+        this.menu.remove(this.selection(), this.elements)
+        this.elements = [...document.querySelectorAll(".list_element")]
+        this.checkboxes = [...document.querySelectorAll(".list_element input")]
+    }
+
+    select(e) {
+        this.menu.select(this.selection())
+    }
+    // *****************************
+}
+
+const to_do = new List()
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,145 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+div.wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 800px;
+    width: 700px;
+    background-color: #c7b89a;
+    border-radius: 30px;
+    box-shadow: 10px 10px 10px darkgrey;
+    /* margin: 0 auto; */
+
+}
+
+h1 {
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.searcher {
+    display: block;
+    height: 70px;
+    background-color: #c7b89a;
+
+}
+
+.searcher input {
+    margin: 20px 50px;
+    height: 40px;
+    width: 300px;
+    font-size: 30px;
+    border: black 2px solid;
+}
+
+
+ul.list {
+    background-color: c7b89a;
+    flex-grow: 1;
+}
+
+.list li.list_element {
+    list-style: none;
+    font-size: 30px;
+    margin-left: 30px;
+}
+
+ul.list input {
+    width: 20px;
+    height: 20px;
+}
+
+
+div.menu {
+    height: 130px;
+    position: relative;
+}
+
+.select_all_wrapper {
+    width: 50%;
+    margin-left: 30px;
+    font-size: 20px;
+
+}
+
+/* menu */
+
+div.menu_wrapper {
+    position: absolute;
+    width: 150px;
+    top: 0px;
+    left: 60%;
+    font-size: 20px;
+    user-select: none;
+    overflow: hidden;
+
+
+}
+
+.menu_wrapper div.option {
+    width: 80%;
+    height: 35px;
+    float: left;
+    border: 2px black solid;
+    border-right: 0px;
+    line-height: 35px;
+    padding-left: 3px;
+    background-color: aliceblue;
+
+}
+
+.fa-sort-down {
+    width: 20%;
+    height: 35px;
+    border: 2px black solid;
+    text-align: center;
+    cursor: pointer;
+    background-color: aliceblue;
+
+}
+
+.fa-sort-down.active {
+    transform: rotate(180deg)
+}
+
+.menu_wrapper .options_wrapper {
+    position: relative;
+    top: -150px;
+    /* display: none; */
+    transition: .3s linear;
+    /* width: 150px; */
+}
+
+.menu_wrapper .options_wrapper.active {
+    display: block;
+    top: 0;
+}
+
+
+.menu_wrapper .options_wrapper .opt {
+    height: 35px;
+    line-height: 35px;
+    padding-left: 3px;
+    border: 2px black solid;
+    border-top: 0px;
+    background-color: aliceblue;
+    cursor: pointer;
+
+}
+
+.menu_wrapper .options_wrapper.active .opt:hover {
+    background-color: cornsilk;
+}
